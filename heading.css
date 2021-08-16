@@ -1,11 +1,7 @@
-@font-face{
-            font-family: 'Stealdream';
-            src: url('Stealdream.woff') format('woff'),
-            
-}
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 
 .h {
       color: rgb(11,121,3);
-      font-family: 'Stealdream';    
+      font-family: 'Lobster', cursive;    
 }
 
