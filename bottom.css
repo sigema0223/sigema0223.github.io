@@ -1,7 +1,5 @@
 .box {
-  position: absolute;
-  bottom: 0px;
-  width: 95%;
+  vertical-align: bottom;
 }
 
 .h_0 {
