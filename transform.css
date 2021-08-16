@@ -1,0 +1,6 @@
+.first_box{
+  transform: translate(500px,500px) rotate(360deg); 
+  transition-property: all;
+  transition-duration 1s;
+  transition-delay: 0.01s;
+}
