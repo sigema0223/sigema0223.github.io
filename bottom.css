@@ -1,6 +1,5 @@
 .box {
   position: absolute;
   bottom: 0px;
-  width: 95%;
-  background color: grey;
+  width:100%
 }
