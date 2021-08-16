@@ -1,3 +1,6 @@
-body{
-  padding-left: 15px;
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+body {
+      font-family: 'Lobster', cursive;
+      padding-left: 15px;
 }
