@@ -1,7 +1,10 @@
-.h {
-      color: rgb(11,121,3);
-      @font-face{
+@font-face{
             font-family: 'Stealdream';
             src:url('Stealdream.woff') format('woff'),
-            )
+}
+
+.h {
+      color: rgb(11,121,3);
+      font-family: 'Stealdream';
+     
 }
