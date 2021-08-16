@@ -1,5 +1,6 @@
 .h {
       color: rgb(11,121,3);
-      font-family: "Stealdream";
-      src:url(Stealdream.woff) format("woff"),
+      @font-face{
+            font-family: "Stealdream";
+            src:local("Stealdream") format("woff");
 }
