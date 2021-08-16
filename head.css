@@ -1,6 +1,9 @@
 @font-face{
             font-family: 'Stealdream';
-            src:url('Stealdream.woff') format('woff'),
+            src:{
+            local('Stealdream'),
+            url('Stealdream.woff') format('woff'),
+            }
 }
 
 .h {
