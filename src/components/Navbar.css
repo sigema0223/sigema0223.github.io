@@ -1,0 +1,44 @@
+
+nav {
+    background-color: #fff;  
+    padding: 16px 0;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+  }
+  
+
+  ul {
+    list-style: none;
+    display: flex;
+    gap: 20px; 
+    padding: 0;
+  }
+  
+
+  li a {
+    text-decoration: none;
+    color: white;        
+    font-size: 18px;
+    font-weight: bold;
+    padding: 14px 28px; 
+    background-color: #29948d;  
+    border-radius: 12px;  
+    transition: all 0.3s ease-in-out;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15); 
+  }
+  
+ 
+  li a:hover {
+    background-color: #288d86;  
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+ 
+  li a {
+    font-family: '60s Stripe', sans-serif; 
+  }
+  
+
+  
