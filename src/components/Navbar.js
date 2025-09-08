@@ -30,6 +30,14 @@ function Navbar() {
               Contact
             </Link>
           </li>
+          <li>
+            <Link 
+              to="/resume" 
+              className="px-6 py-3 rounded-lg transition-colors duration-300 bg-purple-600 hover:bg-purple-700"
+            >
+              Resume
+            </Link>
+          </li>
         </ul>
       </div>
     </nav>
