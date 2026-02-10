@@ -6,6 +6,7 @@ import snowballImage from '../image/snowball.PNG';
 import icnlImage from '../image/icnl.jpg';
 import llmImage from '../image/llm.png';
 import airforceImage from '../image/airforce.jpg';
+import gradingImage from '../image/grading.PNG';
 
 export const projects = [
   {
@@ -106,7 +107,9 @@ export const projects = [
       "Security & Testing: Added authentication and role-based access control (e.g., admin vs. teacher vs. student) and wrote unit and integration tests to ensure reliable, secure operation across the grading workflows."
     ],
     technologies: ["Java", "Spring Boot", "JPA", "React", "Bean Validation", "RBAC", "JUnit"],
-    media: [],
+    media: [
+      { type: "image", url: gradingImage }
+    ],
     link: "",
     github: "",
     year: "2024"
