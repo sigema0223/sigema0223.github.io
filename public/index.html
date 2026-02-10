@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="data:,">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="This is the portfolio Website of mine. Made with ReactJS and love. Template by Kaustubh Mishra(@kaustubhai)">
+    <meta name="author" content="Hyunwoo Lee">
+    <meta name="keywords" content="HTML, CSS, Javascript, ReactJS, NodeJS, SEO, Coding, Portfolio, Resume, Website, Profile, Github, Linkedin, Design, Interactive, CV, Skills">
+    <meta name="robots" content= "index, follow">
+    <meta name="og:title" content="Hyunwoo Lee Website">
+    <meta name="og:type" content="Resume Website">
+    <meta name="og:locale" content="en_IN">
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Grandiflora+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+    <link rel="stylesheet" href="./Bootstrap5.css">
+    <script src="https://kit.fontawesome.com/9b271ff51f.js" crossorigin="anonymous"></script>
+    <title>Hyunwoo Lee Website</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+  </body>
+  <script>
+	const darkPref = window.matchMedia("(prefers-color-scheme: dark)");
+	if(darkPref.matches && localStorage.getItem('mode') !== "Light")
+      localStorage.setItem('mode', 'Dark')
+  </script>
+  <script>
+    const fun = () => {
+    if(localStorage.getItem('mode') === 'Dark'){
+      document.getElementById('mode-switch').checked = true;
+      document.documentElement.classList.toggle('dark-mode')
+      document.getElementById('not-dark').classList.toggle('inverse-dark')
+      
+      // 이스터 에그의 눈 이펙트는 제외 (quotes-particles 클래스가 있으면 제외)
+      const notDark2 = document.getElementById('not-dark2');
+      if (notDark2 && !notDark2.classList.contains('quotes-particles')) {
+        notDark2.classList.toggle('inverse-dark');
+      }
+      
+      var x = document.getElementsByClassName('img-pro')
+      for(let i = 0; i < x.length; i += 1) {
+        x.item(i).classList.toggle("inverse-dark");
+      }
+      
+      // AboutMe 이미지 필터 제거
+      const aboutMeImage = document.getElementById('about-me-image');
+      const aboutMeImageWrapper = document.getElementById('about-me-image-not-dark');
+      if (aboutMeImage) {
+        aboutMeImage.style.filter = 'none';
+        aboutMeImage.style.webkitFilter = 'none';
+        aboutMeImage.style.mozFilter = 'none';
+      }
+      if (aboutMeImageWrapper) {
+        aboutMeImageWrapper.style.filter = 'none';
+        aboutMeImageWrapper.style.webkitFilter = 'none';
+        aboutMeImageWrapper.style.mozFilter = 'none';
+      }
+    }
+    }
+    fun();
+    
+    // 페이지 로드 후에도 이미지 필터 제거
+    window.addEventListener('load', () => {
+      const aboutMeImage = document.getElementById('about-me-image');
+      const aboutMeImageWrapper = document.getElementById('about-me-image-not-dark');
+      if (aboutMeImage) {
+        aboutMeImage.style.filter = 'none';
+        aboutMeImage.style.webkitFilter = 'none';
+        aboutMeImage.style.mozFilter = 'none';
+      }
+      if (aboutMeImageWrapper) {
+        aboutMeImageWrapper.style.filter = 'none';
+        aboutMeImageWrapper.style.webkitFilter = 'none';
+        aboutMeImageWrapper.style.mozFilter = 'none';
+      }
+    });
+  </script>
+</html>

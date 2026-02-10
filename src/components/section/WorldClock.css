@@ -1,0 +1,349 @@
+.world-clock-section {
+  padding: 80px 5% 100px 8% !important;
+  width: 100% !important;
+  min-height: 100vh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  scroll-margin-top: 80px;
+  position: relative !important;
+  z-index: 1 !important;
+  background: transparent !important;
+  box-sizing: border-box !important;
+}
+
+.world-clock-title {
+  font-size: 2.5rem !important;
+  margin-bottom: 40px !important;
+  margin-top: 20px !important;
+  font-family: "Anonymous Pro", monospace !important;
+  color: var(--primary-color);
+  text-align: center;
+  font-weight: 700;
+}
+
+.world-clock-container {
+  display: flex !important;
+  gap: 200px !important;
+  justify-content: center !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  max-width: 1800px !important;
+  width: 100% !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.clock-card {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 120px !important; /* 시계와 텍스트 사이 간격 확대 */
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+/* 미니멀한 시계 디자인 */
+.clock-minimal {
+  position: relative;
+  width: 260px;
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clock-ring {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid rgba(74, 49, 18, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.clock-ring:hover {
+  border-color: rgba(74, 49, 18, 0.3);
+  box-shadow: 
+    0 6px 30px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.clock-marker {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: rgba(74, 49, 18, 0.4);
+  border-radius: 50%;
+}
+
+.clock-number {
+  position: absolute;
+  font-family: "Anonymous Pro", monospace !important;
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
+}
+
+.clock-number-major {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: rgba(74, 49, 18, 0.7);
+}
+
+.clock-number-minor {
+  font-size: 0.6rem;
+  font-weight: 400;
+  color: rgba(74, 49, 18, 0.35);
+}
+
+.clock-hand {
+  position: absolute;
+  transform-origin: bottom center;
+  transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hour-hand-minimal {
+  width: 4px;
+  height: 65px;
+  background: var(--primary-color);
+  top: 65px;
+  left: calc(50% - 2px);
+  border-radius: 2px 2px 0 0;
+}
+
+.minute-hand-minimal {
+  width: 3px;
+  height: 95px;
+  background: var(--primary-color);
+  top: 35px;
+  left: calc(50% - 1.5px);
+  border-radius: 2px 2px 0 0;
+}
+
+.second-hand-minimal {
+  width: 1.5px;
+  height: 110px;
+  background: rgba(74, 49, 18, 0.5);
+  top: 20px;
+  left: calc(50% - 0.75px);
+  z-index: 10;
+}
+
+.clock-center-minimal {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  top: calc(50% - 5px);
+  left: calc(50% - 5px);
+  z-index: 11;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
+.clock-info-minimal {
+  text-align: center;
+  margin-top: 8px;
+}
+
+.clock-city-minimal {
+  font-size: 1rem;
+  font-weight: 700;
+  color: rgba(74, 49, 18, 0.7);
+  margin-bottom: 14px; /* 도시와 시간 사이 간격 확대 */
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.clock-time-minimal {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px; /* 시간과 날짜 사이 간격 확대 */
+  font-family: "Montserrat", monospace !important;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 1px;
+}
+
+.clock-date-minimal {
+  
+  font-size: 0.95rem;
+  color: rgba(74, 49, 18, 0.5);
+  font-weight: 400;
+}
+
+.clock-loading {
+  color: rgba(74, 49, 18, 0.5);
+  font-family: "Anonymous Pro", monospace !important;
+  font-size: 1rem;
+}
+
+/* 다크모드 스타일 */
+.dark-mode .clock-ring {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.2);
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.dark-mode .clock-ring:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 6px 30px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.dark-mode .clock-marker {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.dark-mode .clock-number-major {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.dark-mode .clock-number-minor {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.dark-mode .hour-hand-minimal,
+.dark-mode .minute-hand-minimal {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.dark-mode .second-hand-minimal {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.dark-mode .clock-center-minimal {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .clock-time-minimal {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.dark-mode .clock-city-minimal {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.dark-mode .clock-date-minimal {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.dark-mode .clock-loading {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 1400px) {
+  .world-clock-container {
+    gap: 150px !important;
+  }
+}
+
+@media (max-width: 1200px) {
+  .world-clock-container {
+    gap: 120px !important;
+  }
+}
+
+@media (max-width: 968px) {
+  .world-clock-container {
+    flex-direction: column;
+    gap: 100px;
+  }
+  
+  .clock-card {
+    gap: 50px !important;
+  }
+  
+  .clock-minimal {
+    width: 220px;
+    height: 220px;
+  }
+  
+  .hour-hand-minimal {
+    height: 55px;
+    top: 55px;
+  }
+  
+  .minute-hand-minimal {
+    height: 80px;
+    top: 30px;
+  }
+  
+  .second-hand-minimal {
+    height: 93px;
+    top: 17px;
+  }
+  
+  .world-clock-title {
+    font-size: 2rem !important;
+    margin-bottom: 40px !important;
+  }
+  
+  .clock-time-minimal {
+    font-size: 1.8rem;
+  }
+  
+  .clock-number-major {
+    font-size: 0.65rem;
+  }
+  
+  .clock-number-minor {
+    font-size: 0.55rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .clock-minimal {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .hour-hand-minimal {
+    height: 45px;
+    top: 45px;
+  }
+  
+  .minute-hand-minimal {
+    height: 65px;
+    top: 25px;
+  }
+  
+  .second-hand-minimal {
+    height: 75px;
+    top: 15px;
+  }
+  
+  .clock-city-minimal {
+    font-size: 0.9rem;
+  }
+  
+  .clock-time-minimal {
+    font-size: 1.6rem;
+  }
+  
+  .clock-date-minimal {
+    font-size: 0.85rem;
+  }
+  
+  .clock-number-major {
+    font-size: 0.6rem;
+  }
+  
+  .clock-number-minor {
+    font-size: 0.5rem;
+  }
+}

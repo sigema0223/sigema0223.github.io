@@ -1,0 +1,448 @@
+.quotes-easter-egg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+              opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  pointer-events: none;
+}
+
+.quotes-easter-egg.open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.quotes-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.quotes-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #c2ae96;
+  background-image: 
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.03) 0px,
+      transparent 2px,
+      transparent 4px,
+      rgba(0, 0, 0, 0.03) 6px,
+      transparent 8px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.03) 0px,
+      transparent 2px,
+      transparent 4px,
+      rgba(0, 0, 0, 0.03) 6px,
+      transparent 8px
+    );
+  background-size: 8px 8px;
+  border-radius: 0;
+  padding: 40px;
+  box-shadow: none;
+  overflow: hidden;
+  font-family: 'Source Sans Pro', sans-serif;
+  animation: slideUpFadeIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+@keyframes slideUpFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.quotes-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #000;
+  font-size: 24px;
+  font-weight: bold;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.quotes-close-btn:hover {
+  background-color: var(--primary-color);
+  color: #fff;
+  transform: rotate(90deg);
+}
+
+.quotes-particles {
+  position: absolute;
+  color: #fff !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  filter: none !important;
+  -webkit-filter: none !important;
+  -moz-filter: none !important;
+}
+
+/* .particle 클래스 스타일을 이스터 에그에 맞게 오버라이드 */
+.quotes-particles.particle {
+  color: #fff;
+  margin: 0 !important;
+  margin-top: 0 !important; /* 이스터 에그에서는 -100vh 제거 */
+  filter: none !important;
+  -webkit-filter: none !important;
+  -moz-filter: none !important;
+}
+
+/* 다크모드의 .particle 필터를 이스터 에그에서 무시 */
+.dark-mode .quotes-particles.particle,
+.dark-mode .quotes-easter-egg .quotes-particles.particle {
+  color: #fff;
+  filter: none !important;
+  -webkit-filter: none !important;
+  -moz-filter: none !important;
+  border-color: transparent !important;
+}
+
+/* 다크모드에서도 눈 이펙트는 항상 흰색으로 유지 - 모든 경우에 필터 제거 */
+.quotes-particles,
+.quotes-particles *,
+.quotes-particles.inverse-dark,
+.quotes-particles.inverse-dark *,
+.dark-mode .quotes-particles,
+.dark-mode .quotes-particles *,
+.quotes-easter-egg .quotes-particles,
+.quotes-easter-egg .quotes-particles *,
+.quotes-particles.particle,
+.quotes-particles.particle *,
+.dark-mode .quotes-particles.particle,
+.dark-mode .quotes-particles.particle * {
+  color: #fff;
+  filter: none !important;
+  -webkit-filter: none !important;
+  -moz-filter: none !important;
+}
+
+.quotes-particles canvas,
+.quotes-particles.inverse-dark canvas,
+.dark-mode .quotes-particles canvas,
+.quotes-easter-egg .quotes-particles canvas,
+.quotes-particles.particle canvas,
+.dark-mode .quotes-particles.particle canvas,
+.dark-mode .quotes-easter-egg .quotes-particles.particle canvas {
+  color: #fff;
+  filter: none !important;
+  -webkit-filter: none !important;
+  -moz-filter: none !important;
+}
+
+.quotes-scattered {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.quote-item {
+  position: absolute;
+  cursor: pointer;
+  padding: 0;
+  background: none;
+  border: none;
+  box-shadow: none;
+  transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  max-width: 400px;
+  font-family: 'Montserrat', sans-serif;
+  user-select: none;
+  transform-origin: left center;
+}
+
+.quote-item:hover {
+  z-index: 5;
+  transform: scale(1.1) !important;
+}
+
+.quote-item.dragging {
+  cursor: grabbing;
+  z-index: 100;
+}
+
+.quote-item.selected {
+  z-index: 10;
+  cursor: default;
+  transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  pointer-events: none;
+  opacity: 1;
+  animation: fadeOutSelected 0.3s ease-out 0.9s forwards;
+}
+
+@keyframes fadeOutSelected {
+  to {
+    opacity: 0;
+  }
+}
+
+.quote-item.fade-out {
+  opacity: 0;
+  transform: scale(0.3) rotate(45deg) !important;
+  pointer-events: none;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.quote-text {
+  margin: 0;
+  font-size: 2.5rem;
+  line-height: 1.3;
+  color: #333;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  letter-spacing: 0.5px;
+  font-family: 'Grandiflora One', serif;
+}
+
+.quote-item.selected .quote-text {
+  font-size: 3rem;
+  color: #000;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.15);
+  transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.quotes-back-btn {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  padding: 12px 24px;
+  border: 2px solid rgba(0, 0, 0, 0.3);
+  background-color: rgba(194, 174, 150, 0.9);
+  color: #333;
+  font-size: 1.1rem;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 20;
+  opacity: 0;
+  animation: fadeInButton 0.5s ease-out 0.8s forwards;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes fadeInButton {
+  to {
+    opacity: 1;
+  }
+}
+
+.quotes-back-btn:hover {
+  background-color: var(--primary-color);
+  color: #fff;
+  border-color: var(--primary-color);
+  transform: translateX(-5px);
+}
+
+.quotes-selected-quote {
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 60px;
+  background: none;
+  border: none;
+  min-height: auto;
+  max-width: 45%;
+  opacity: 0;
+  animation: fadeInQuote 0.5s ease-out 1.1s forwards;
+  z-index: 15;
+  pointer-events: none;
+}
+
+@keyframes fadeInQuote {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+}
+
+.quotes-selected-text {
+  font-size: 4rem;
+  font-family: 'Grandiflora One', serif;
+  font-weight: bold;
+  color: #000;
+  text-align: left;
+  margin: 0 0 30px 0;
+  line-height: 1.3;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.quotes-selected-author {
+  font-size: 2rem;
+  font-family: 'Grandiflora One', serif;
+  font-weight: bold;
+  color: #555;
+  font-style: italic;
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.quotes-explanation {
+  position: absolute;
+  top: 50%;
+  right: 10%;
+  transform: translateY(-50%);
+  width: 35%;
+  max-width: 500px;
+  padding: 40px;
+  background: none;
+  border: none;
+  min-height: auto;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  animation: slideInRight 0.8s ease-out 0.6s forwards;
+  z-index: 15;
+}
+
+.quotes-explanation h3 {
+  font-size: 2rem;
+  font-family: 'Grandiflora One', serif;
+  font-weight: bold;
+  color: var(--primary-color);
+  margin: 0 0 20px 0;
+}
+
+.quotes-explanation p {
+  font-size: 1.2rem;
+  font-family: 'Grandiflora One', serif;
+  font-weight: bold;
+  line-height: 1.8;
+  color: #333;
+  margin: 0;
+  white-space: pre-line;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .quotes-container {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+  }
+
+  .quotes-selected-view {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .quotes-selected-text {
+    font-size: 1.5rem;
+  }
+
+  .quotes-selected-author {
+    font-size: 1rem;
+  }
+
+  .quotes-explanation {
+    padding: 20px;
+  }
+
+  .quotes-explanation h3 {
+    font-size: 1.5rem;
+  }
+
+  .quotes-explanation p {
+    font-size: 1rem;
+  }
+
+  .quote-item {
+    max-width: 300px;
+  }
+
+  .quote-text {
+    font-size: 1.8rem;
+  }
+
+  .quote-item.selected .quote-text {
+    font-size: 2.2rem;
+  }
+
+  .quotes-selected-quote {
+    left: 5%;
+    max-width: 90%;
+    padding: 30px;
+  }
+
+  .quotes-selected-text {
+    font-size: 2.5rem;
+  }
+
+  .quotes-selected-author {
+    font-size: 1.5rem;
+  }
+
+  .quotes-explanation {
+    right: 5%;
+    width: 90%;
+    max-width: none;
+    padding: 30px;
+  }
+}
+
