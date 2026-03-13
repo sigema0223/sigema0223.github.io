@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/static/css/main.7ae6dd98.chunk.css",
-    "main.js": "/static/js/main.383c5a6b.chunk.js",
-    "main.js.map": "/static/js/main.383c5a6b.chunk.js.map",
+    "main.js": "/static/js/main.4f17d48c.chunk.js",
+    "main.js.map": "/static/js/main.4f17d48c.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.5ebc510a.js",
     "runtime-main.js.map": "/static/js/runtime-main.5ebc510a.js.map",
     "static/js/2.5c94a8f6.chunk.js": "/static/js/2.5c94a8f6.chunk.js",
@@ -18,12 +18,14 @@
     "static/media/icnl.328b440b.jpg": "/static/media/icnl.328b440b.jpg",
     "static/media/llm.72ed200a.png": "/static/media/llm.72ed200a.png",
     "static/media/nas.cc6ada50.PNG": "/static/media/nas.cc6ada50.PNG",
-    "static/media/snowball.b7a3bde4.PNG": "/static/media/snowball.b7a3bde4.PNG"
+    "static/media/snowball.b7a3bde4.PNG": "/static/media/snowball.b7a3bde4.PNG",
+    "static/media/uclks.c8efbcfb.png": "/static/media/uclks.c8efbcfb.png",
+    "static/media/uclks2.5be6f75d.jpg": "/static/media/uclks2.5be6f75d.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.5ebc510a.js",
     "static/js/2.5c94a8f6.chunk.js",
     "static/css/main.7ae6dd98.chunk.css",
-    "static/js/main.383c5a6b.chunk.js"
+    "static/js/main.4f17d48c.chunk.js"
   ]
 }
