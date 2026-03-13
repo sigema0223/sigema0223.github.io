@@ -7,6 +7,8 @@ import icnlImage from '../image/icnl.jpg';
 import llmImage from '../image/llm.png';
 import airforceImage from '../image/airforce.jpg';
 import gradingImage from '../image/grading.PNG';
+import uclks from '../image/uclks.png';
+import uclks2 from '../image/uclks2.jpg';
 
 export const projects = [
   {
@@ -126,8 +128,11 @@ export const projects = [
       "Infrastructure & Website Ownership: Managed the UCLKS website (uclks.org) for 900+ members, using Docker for deployment and PHP for feature development to keep information, sign-ups, and announcements reliable and up to date.",
       "Event Leadership: Led society events end-to-end, from planning and logistics to on-site execution, coordinating committees and sponsors to deliver smooth experiences for hundreds of attendees."
     ],
-    technologies: ["Docker", "PHP", "Linux", "Nginx/Apache", "Event Operations"],
-    media: [],
+    technologies: ["Docker", "PHP", "Linux", "Event Operations"],
+    media: [
+      { type: "image", url: uclks },
+      { type: "image", url: uclks2 }
+    ],
     link: "https://uclks.org/",
     github: "",
     year: "2024-2026"
@@ -153,5 +158,3 @@ export const projects = [
     year: "2022-2024"
   }
 ];
-
-

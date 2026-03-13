@@ -1,165 +1,115 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { aboutMe } from '../../profile';
+import profileImage from '../../KakaoTalk_20251231_004403559.jpg';
+
+function useInView(threshold = 0.1) {
+  const ref = useRef(null);
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const node = ref.current; if (!node) return;
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setInView(true); }, { threshold });
+    obs.observe(node); return () => obs.disconnect();
+  }, [threshold]);
+  return [ref, inView];
+}
 
 const AboutMe = ({ onQuestionMarkClick }) => {
-    const [isVisible, setIsVisible] = useState(false);
-    const imageRef = useRef(null);
-    const overlayRef = useRef(null);
+  const [ref, inView] = useInView(0.1);
 
-    useEffect(() => {
-        let ticking = false;
-        const handleScroll = () => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    const scrollPosition = window.scrollY;
-                    const windowHeight = window.innerHeight;
-                    // 스크롤을 조금만 내려도 보이도록 설정
-                    if (scrollPosition > windowHeight * 0.3) {
-                        setIsVisible(true);
-                    } else {
-                        setIsVisible(false);
-                    }
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        };
+  const t = (delay) => ({
+    opacity: inView ? 1 : 0,
+    transform: inView ? 'translateY(0)' : 'translateY(18px)',
+    transition: `all 0.7s ease ${delay}s`,
+  });
 
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+  return (
+    <section id="who-section" ref={ref} className="about-section">
+      <div className="about-container">
+        {/* Left */}
+        <div className="about-left">
+          <p style={{
+            fontFamily: 'var(--f-mono)', fontSize: 11,
+            letterSpacing: '0.2em', color: '#8a7a6a',
+            textTransform: 'uppercase', marginBottom: 14, ...t(0.1),
+          }}>01 — Who am I</p>
 
-    useEffect(() => {
-        
-        const updateOverlaySize = () => {
-            if (imageRef.current && overlayRef.current) {
-                const img = imageRef.current;
-                const overlay = overlayRef.current;
-                overlay.style.width = img.offsetWidth + 'px';
-                overlay.style.height = img.offsetHeight + 'px';
-                overlay.style.top = img.offsetTop + 'px';
-                overlay.style.left = img.offsetLeft + 'px';
-            }
-        };
+          <h2 style={{
+            fontFamily: 'var(--f-serif)',
+            fontSize: 'clamp(32px, 5vw, 52px)',
+            fontWeight: 400, color: '#1a1108',
+            lineHeight: 1.15, margin: '0 0 32px 0', ...t(0.2),
+          }}>
+            Building at the<br />
+            <span style={{ fontStyle: 'italic', color: '#4a3112' }}>intersection</span> of<br />
+            code & curiosity.{' '}
+            <span
+              onClick={onQuestionMarkClick}
+              style={{
+                cursor: 'pointer', display: 'inline-block',
+                color: '#c2ae96', fontSize: '0.5em',
+                transition: 'transform 0.3s ease', verticalAlign: 'super',
+              }}
+              onMouseEnter={e => e.target.style.transform = 'scale(1.4) rotate(12deg)'}
+              onMouseLeave={e => e.target.style.transform = 'scale(1)'}
+              title="Easter egg!"
+            >?</span>
+          </h2>
 
-        const removeFilters = () => {
-            if (imageRef.current) {
-                imageRef.current.style.setProperty('filter', 'none', 'important');
-                imageRef.current.style.setProperty('-webkit-filter', 'none', 'important');
-                imageRef.current.style.setProperty('-moz-filter', 'none', 'important');
-            }
-            const wrapper = document.getElementById('about-me-image-not-dark');
-            if (wrapper) {
-                wrapper.style.setProperty('filter', 'none', 'important');
-                wrapper.style.setProperty('-webkit-filter', 'none', 'important');
-                wrapper.style.setProperty('-moz-filter', 'none', 'important');
-            }
-            const rightContainer = document.querySelector('.about-me-right');
-            if (rightContainer) {
-                rightContainer.style.setProperty('filter', 'none', 'important');
-                rightContainer.style.setProperty('-webkit-filter', 'none', 'important');
-                rightContainer.style.setProperty('-moz-filter', 'none', 'important');
-            }
-        };
+          {aboutMe.description.map((p, i) => (
+            <p key={i} style={{
+              fontFamily: 'var(--f-mono)', fontSize: 14,
+              lineHeight: 1.85, color: '#5a4a3a',
+              maxWidth: 580, marginBottom: 16, ...t(0.35 + i * 0.12),
+            }}>{p}</p>
+          ))}
 
-        if (imageRef.current) {
-            imageRef.current.addEventListener('load', () => {
-                updateOverlaySize();
-                removeFilters();
-            });
-            updateOverlaySize();
-            removeFilters();
-        }
+          {/* Interest tags */}
+          <div style={{
+            display: 'flex', gap: 10, flexWrap: 'wrap',
+            marginTop: 20, ...t(0.6),
+          }}>
+            {['LLMs', 'HCI', 'Financial Computing'].map(tag => (
+              <span key={tag} className="interest-tag">{tag}</span>
+            ))}
+          </div>
 
-        // 다크모드 변경 감지
-        const observer = new MutationObserver(() => {
-            removeFilters();
-        });
-        observer.observe(document.documentElement, {
-            attributes: true,
-            attributeFilter: ['class']
-        });
-
-        // 지속적으로 필터 제거 (다크모드 전환 시 즉시 반영)
-        const filterCheckInterval = setInterval(() => {
-            removeFilters();
-        }, 100);
-
-        window.addEventListener('resize', updateOverlaySize);
-        return () => {
-            window.removeEventListener('resize', updateOverlaySize);
-            observer.disconnect();
-            clearInterval(filterCheckInterval);
-            if (imageRef.current) {
-                imageRef.current.removeEventListener('load', updateOverlaySize);
-            }
-        };
-    }, []);
-
-    const handleQuestionMarkClick = (e) => {
-        e.preventDefault();
-        if (onQuestionMarkClick) {
-            onQuestionMarkClick();
-        }
-    };
-
-    // 제목을 분리하여 "?"를 클릭 가능하게 만들기
-    const titleParts = aboutMe.title.split('?');
-    const titleBeforeQuestion = titleParts[0];
-    const questionMark = '?';
-
-    return (
-        <div className={`AboutMe ${isVisible ? 'visible' : ''}`}>
-            <div className="about-me-container">
-                <div className="about-me-left">
-                    <h2>
-                        {titleBeforeQuestion}
-                        <span 
-                            className="question-mark-clickable" 
-                            onClick={handleQuestionMarkClick}
-                            title="Click to see quotes"
-                        >
-                            {questionMark}
-                        </span>
-                    </h2>
-                    <div className="about-content">
-                        {aboutMe.description.map((paragraph, index) => (
-                            <p key={index}>{paragraph}</p>
-                        ))}
-                    </div>
-                    
-                    <div className="education-section">
-                        <div className="education-item">
-                            <h3 className="education-institution">University College London (UCL)</h3>
-                            <p className="education-degree">MEng Computer Science</p>
-                            <p className="education-period">Sep 2021 - Jun 2027</p>
-                            <p className="education-location">London, United Kingdom</p>
-                        </div>
-                        <div className="education-item">
-                            <h3 className="education-institution">Mander Portman Woodward Birmingham</h3>
-                            <p className="education-degree">A-level</p>
-                            <p className="education-period">Sep 2019 - Jun 2020</p>
-                            <p className="education-location">Birmingham, United Kingdom</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="about-me-right">
-                    
-                    <div className="about-me-image-wrapper" id="about-me-image-not-dark">
-                        <img 
-                            ref={imageRef}
-                            src="KakaoTalk_20251231_004403559.jpg" 
-                            alt="About me"
-                            className="about-me-image"
-                            id="about-me-image"
-                        />
-                        <div ref={overlayRef} className="about-me-image-overlay"></div>
-                    </div>
-                </div>
+          {/* Education */}
+          <div style={{ marginTop: 32, ...t(0.65) }}>
+            <div className="education-card">
+              <p style={{
+                fontFamily: 'var(--f-serif)', fontSize: 17,
+                color: '#1a1108', margin: '0 0 4px 0',
+              }}>University College London</p>
+              <p style={{
+                fontFamily: 'var(--f-mono)', fontSize: 13,
+                color: '#4a3a2a', margin: '0 0 2px 0',
+              }}>MEng Computer Science</p>
+              <p style={{
+                fontFamily: 'var(--f-mono)', fontSize: 12,
+                color: '#8a7a6a', margin: 0,
+              }}>2021 – 2027 · London, UK</p>
             </div>
+          </div>
         </div>
-    );
+
+        {/* Right — Profile Image */}
+        <div className="about-right" style={{
+          opacity: inView ? 1 : 0,
+          transform: inView ? 'translateX(0)' : 'translateX(40px)',
+          transition: 'all 0.9s cubic-bezier(0.22,1,0.36,1) 0.4s',
+        }}>
+          <div className="about-image-wrapper">
+            <img
+              src={profileImage}
+              alt="Hyunwoo Lee"
+              className="about-image"
+              id="about-me-image-not-dark"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default AboutMe;
-

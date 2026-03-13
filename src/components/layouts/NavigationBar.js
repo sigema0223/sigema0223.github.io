@@ -1,82 +1,90 @@
 import React, { useState, useEffect } from 'react';
 
 const NavigationBar = () => {
-    const [activeSection, setActiveSection] = useState('header-section');
+  const [activeSection, setActiveSection] = useState('header-section');
+  const [scrollProgress, setScrollProgress] = useState(0);
 
-    const scrollToSection = (sectionId) => {
-        if (sectionId === 'contact-section') {
-            // Contact 섹션일 때는 페이지 맨 아래로 스크롤
-            window.scrollTo({
-                top: document.documentElement.scrollHeight - window.innerHeight,
-                behavior: 'smooth'
-            });
-        } else {
-            const element = document.getElementById(sectionId);
-            if (element) {
-                const offset = 80; // 네비게이션 바 높이 고려
-                const elementPosition = element.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - offset;
-                
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                });
-            }
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const offset = 60;
+      const top = element.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['header-section', 'who-section', 'why-section', 'contact-section'];
+      const scrollPosition = window.scrollY + 150;
+      const atBottom = (window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 50;
+
+      // Progress
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollProgress(total > 0 ? (window.scrollY / total) * 100 : 0);
+
+      if (atBottom) {
+        setActiveSection('contact-section');
+        return;
+      }
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = document.getElementById(sections[i]);
+        if (section && scrollPosition >= section.offsetTop) {
+          setActiveSection(sections[i]);
+          break;
         }
+      }
     };
 
-    useEffect(() => {
-        const handleScroll = () => {
-            const sections = ['header-section', 'who-section', 'why-section', 'when-section', 'contact-section'];
-            const scrollPosition = window.scrollY + 100;
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-            for (let i = sections.length - 1; i >= 0; i--) {
-                const section = document.getElementById(sections[i]);
-                if (section) {
-                    const sectionTop = section.offsetTop;
-                    if (scrollPosition >= sectionTop) {
-                        setActiveSection(sections[i]);
-                        break;
-                    }
-                }
-            }
-        };
+  const menuItems = [
+    { id: 'header-section', label: 'What?' },
+    { id: 'who-section', label: 'Who?' },
+    { id: 'why-section', label: 'Why?' },
+    { id: 'contact-section', label: 'How?' },
+  ];
 
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        handleScroll();
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+  return (
+    <>
+      {/* Scroll progress bar */}
+      <div
+        className="scroll-progress"
+        style={{ width: `${scrollProgress}%` }}
+      />
 
-    const menuItems = [
-        { id: 'header-section', label: 'What?' },
-        { id: 'who-section', label: 'Who?' },
-        { id: 'why-section', label: 'Why?' },
-        { id: 'when-section', label: 'When?' },
-        { id: 'contact-section', label: 'How?' }
-    ];
-
-    return (
-        <nav className="navigation-bar">
-            <div className="nav-container">
-                {menuItems.map((item) => (
-                    <div key={item.label} className="nav-item-wrapper">
-                        <button 
-                            className={`nav-item ${activeSection === item.id ? 'active' : ''}`}
-                            onClick={() => item.id && scrollToSection(item.id)}
-                        >
-                            {item.label}
-                        </button>
-                        {item.id && (
-                            <div className={`nav-toggle ${activeSection === item.id ? 'active' : ''}`}>
-                                <div className="toggle-arrow"></div>
-                            </div>
-                        )}
-                    </div>
-                ))}
-            </div>
-        </nav>
-    );
+      {/* Vertical right nav */}
+      <nav className="nav-vertical">
+        {menuItems.map((item) => {
+          const isActive = activeSection === item.id;
+          return (
+            <button
+              key={item.id}
+              onClick={() => scrollToSection(item.id)}
+              style={{
+                fontSize: isActive ? 16 : 14,
+                color: isActive ? '#4a3112' : '#b5a898',
+                opacity: isActive ? 1 : 0.7,
+              }}
+            >
+              <span>{item.label}</span>
+              <div
+                className="nav-line"
+                style={{
+                  width: isActive ? 24 : 12,
+                  background: isActive ? '#4a3112' : '#c2ae96',
+                }}
+              />
+            </button>
+          );
+        })}
+      </nav>
+    </>
+  );
 };
 
 export default NavigationBar;
-

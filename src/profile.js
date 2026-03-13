@@ -1,20 +1,18 @@
 // Change website animations
 const animation = {
-  // make it false to switch off fade-up animation
   animate: true,
-  // animation playing duration
   duration: 750,
-  // if true, animation plays only once when element comes on screen
   once: false,
 };
-// Change your display name on tha landing display
+
 const header = {
   name: "Hyunwoo Lee",
 };
+
 const background = {
-  // Options: Snow or Particle
   type: "Snow",
 };
+
 const aboutMe = {
   title: "Who am I ?",
   description: [
@@ -28,7 +26,6 @@ const quotes = [
     text: "오늘도 어제도 아니 잊고 먼 훗날 그때에 잊었노라",
     author: "김소월",
     explanation: "사실 아직 잘 모르겠어요. 나이가 들수록 모르는 게 더 많아지는 것 같네요. 취직 고민, 이직 고민, 연애 고민 무수히 많은 고민들과 어려움이 우리 앞에 있지만 그래도 좋은 하루가 되길 바라겠습니다.\n\n예전에는 커리어적으로 성공하고싶다는 생각도 했습니다. 좋은 회사에 들어가 새로운 기술을 개발하면서요. 하지만 군대에 다녀오고 나서 조금 바뀐 것 같아요. 아마 나이가 들어서일까요. 칸트의 말 중에는 이런 말이 있다고해요. 사람을 수단이 아닌 목적으로 대하라. 뜬금없긴한데 저는 하루하루 좋은 사람들과 행복한 하루를 보내는게 더 가치있다고 생각하게되었습니다.\n\n살다보면 왜 사냐는 고민을 많이들 하게 됩니다. 오랜만에 만난 친구는 자기가 이 길을 왜 선택했고 더이상 못해먹겠다는 말을 하더라구요. 모두가 모두의 고민과 어려움을 짊어지고 산다고 느꼈습니다. 저는 그렇게 생각해요. 왜? 라는 질문을 던지게 되면 결국에는 제가 어떤 걸 원하는 지 알 수 있는 것 같아요. 마지막에는 웃으며 끝나면 좋은 것 아닐까요? 사랑하는 사람들과요."
-
   },
   {
     text: "너를 기다리는 동안 나는 너에게 가고 있다",
@@ -57,7 +54,6 @@ const quotes = [
   }
 ];
 
-// Dont change anything here
 export {
   animation,
   header,

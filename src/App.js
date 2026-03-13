@@ -1,52 +1,57 @@
-import React, { useEffect, useState } from "react";
-import Particles from "./components/layouts/Particles";
-import NavigationBar from "./components/layouts/NavigationBar";
-import Header from "./components/section/Header";
-import AboutMe from "./components/section/AboutMe";
-import Contact from "./components/section/Contact";
-import WorldClock from "./components/section/WorldClock";
-import ProjectsToss from "./components/section/ProjectsToss";
-import QuotesEasterEgg from "./components/section/QuotesEasterEgg";
-import AOS from "aos";
-import "aos/dist/aos.css";
-import { animation } from "./profile";
+import React, { useEffect, useState } from 'react';
+import Snowfall from './components/layouts/Particles';
+import NavigationBar from './components/layouts/NavigationBar';
+import Header from './components/section/Header';
+import AboutMe from './components/section/AboutMe';
+import Contact from './components/section/Contact';
+import ProjectsToss from './components/section/ProjectsToss';
+import QuotesEasterEgg from './components/section/QuotesEasterEgg';
+import './styles/style.css';
 
 function App() {
   const [isQuotesOpen, setIsQuotesOpen] = useState(false);
+  const [mousePos, setMousePos] = useState({ x: -300, y: -300 });
 
+  // Mouse glow
   useEffect(() => {
-    AOS.init({
-      duration: animation.duration,
-      once: animation.once,
-      disable: !animation.animate,
-    });
-    // eslint-disable-next-line
+    const handler = (e) => setMousePos({ x: e.clientX, y: e.clientY });
+    window.addEventListener('mousemove', handler);
+    return () => window.removeEventListener('mousemove', handler);
   }, []);
 
-  const handleQuestionMarkClick = () => {
-    setIsQuotesOpen(true);
-  };
-
-  const handleCloseQuotes = () => {
-    setIsQuotesOpen(false);
-  };
-
   return (
-    <div className="App">
+    <div className="App" style={{ background: 'var(--c-bg)', minHeight: '100vh', position: 'relative', overflow: 'hidden' }}>
+      {/* Noise SVG filter */}
+      <svg style={{ position: 'fixed', width: 0, height: 0 }}>
+        <filter id="noise">
+          <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
+          <feColorMatrix type="saturate" values="0" />
+        </filter>
+      </svg>
+      <div className="noise-overlay" style={{ filter: 'url(#noise)' }} />
+
+      {/* Mouse glow */}
+      <div className="mouse-glow" style={{ left: mousePos.x, top: mousePos.y }} />
+
+      {/* Grid background */}
+      <div className="grid-bg" />
+
+      {/* Snow */}
+      <Snowfall />
+
+      {/* Navigation */}
       <NavigationBar />
-      <div id="header-section">
+
+      {/* Sections */}
+      <div style={{ position: 'relative', zIndex: 3 }}>
         <Header />
-      </div>
-      <Particles />
-      <div id="who-section">
-        <AboutMe onQuestionMarkClick={handleQuestionMarkClick} />
-      </div>
-      <ProjectsToss />
-      <WorldClock />
-      <div id="contact-section">
+        <AboutMe onQuestionMarkClick={() => setIsQuotesOpen(true)} />
+        <ProjectsToss />
         <Contact />
       </div>
-      <QuotesEasterEgg isOpen={isQuotesOpen} onClose={handleCloseQuotes} />
+
+      {/* Easter egg */}
+      <QuotesEasterEgg isOpen={isQuotesOpen} onClose={() => setIsQuotesOpen(false)} />
     </div>
   );
 }

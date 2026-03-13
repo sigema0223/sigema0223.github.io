@@ -1,123 +1,71 @@
-import React from 'react'
-import Particles from 'react-particles-js'
-import { background } from '../../profile'
+import React, { useRef, useEffect } from 'react';
 
-const ParticlesBackground = () => {
-    return (
-        <div className="particle">
-            { background.type === 'Snow' && <Particles
-            height="100vh"
-            width="100%"
-                params={{
-                "particles": {
-                    "number": {
-                        "value": 50,
-                        "density": {
-                            "enable": false
-                        }
-                    },
-                    "color": {
-                        "value": "#ffffff"
-                    },
-                    "opacity": {
-                        "value": 0.8,
-                        "random": true
-                    },
-                    "size": {
-                        "value": 7,
-                        "random": true,
-                        "anim": {
-                            "size_min": 2,
-                            "enable": true
-                        }
-                    },
-                    "move": {
-                        "direction": "bottom",
-                        "out_mode": "out",
-                        "speed": 1.5
-                    },
-                    "line_linked": {
-                        "enable": false
-                    },
-                    "shape": {
-                        "type": "circle"
-                    }
-                },
-                "interactivity": {
-                    "events": {
-                        "onclick": {
-                            "enable": true,
-                            "mode": "remove"
-                        }
-                    },
-                    "modes": {
-                        "remove": {
-                            "particles_nb": 5
-                        }
-                    }
-                }
-            }} />}
-            { background.type === 'Particle' && <Particles
-            height= "100vh"
-            width= "100vw"
-            params={{
-            "particles": {
-                "collisions": {
-                    "enable": true
-                },
-                "number": {
-                    "value": 100,
-                    "density": {
-                        "enable": false
-                    }
-                },
-                "color": "#000",
-                "size": {
-                    "value": 5,
-                    "random": true,
-                    "anim": {
-                        "speed": 4,
-                        "size_min": 0.3
-                    }
-                },
-                "line_linked": {
-                    "enable": true,
-                    "color": "#000"
-                },
-                "move": {
-                    "random": true,
-                    "speed": 1,
-                    "direction": "bottom",
-                    "out_mode": "out"
-                }
-            },
-            "interactivity": {
-                "events": {
-                    "onhover": {
-                        "enable": true,
-                        "mode": "bubble"
-                    },
-                    "onclick": {
-                        "enable": true,
-                        "mode": "push"
-                    }
-                },
-                "modes": {
-                    "bubble": {
-                        "distance": 250,
-                        "duration": 2,
-                        "size": 6,
-                        "opacity": 0.4
-                    },
-                    "push": {
-                        "particles_nb": 5
-                    }
-                },
-                "retina_detect": true
-            }
-        }} />}
-        </div>
-    )
-}
+const Snowfall = ({ count = 50 }) => {
+  const canvasRef = useRef(null);
+  const animRef = useRef(null);
+  const flakes = useRef([]);
 
-export default ParticlesBackground
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = document.documentElement.scrollHeight || window.innerHeight * 5;
+    };
+    resize();
+    window.addEventListener('resize', resize);
+
+    if (!flakes.current.length) {
+      for (let i = 0; i < count; i++) {
+        flakes.current.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 2.2 + 0.6,
+          speed: Math.random() * 0.7 + 0.3,
+          wind: Math.random() * 0.35 - 0.175,
+          opacity: Math.random() * 0.35 + 0.15,
+        });
+      }
+    }
+
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      flakes.current.forEach((f) => {
+        ctx.beginPath();
+        ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${f.opacity})`;
+        ctx.fill();
+        f.y += f.speed;
+        f.x += f.wind;
+        if (f.y > canvas.height) { f.y = -5; f.x = Math.random() * canvas.width; }
+        if (f.x > canvas.width) f.x = 0;
+        if (f.x < 0) f.x = canvas.width;
+      });
+      animRef.current = requestAnimationFrame(draw);
+    };
+    draw();
+
+    return () => {
+      cancelAnimationFrame(animRef.current);
+      window.removeEventListener('resize', resize);
+    };
+  }, [count]);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      style={{
+        position: 'fixed',
+        inset: 0,
+        width: '100%',
+        height: '100%',
+        pointerEvents: 'none',
+        zIndex: 2,
+      }}
+    />
+  );
+};
+
+export default Snowfall;
